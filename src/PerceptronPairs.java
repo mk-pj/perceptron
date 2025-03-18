@@ -74,7 +74,7 @@ public class PerceptronPairs {
         int size = 0;
         int correctPredictions = 0;
         StringBuilder sb = new StringBuilder();
-        for (Kl kl : new Kl[]{Kl.SETOSA, Kl.VERSICOLOR, Kl.VIRGINICA}) {
+        for (Kl kl :  Kl.irisTypes) {
             List<DataPoint> dataPoints = testingData.get(kl);
             for (DataPoint dp : dataPoints) {
                 Kl prediction = classify(dp);
