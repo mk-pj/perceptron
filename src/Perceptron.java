@@ -59,11 +59,11 @@ public class Perceptron {
             if(prediction == answer.get(i))
                 correctAnswersCount++;
 
-            sb.setLength(0);
             sb.append("prediction = ")
               .append(prediction == 1 ? "[" + targetClass + "]" : Kl.getOthers(targetClass))
               .append(" reality = [").append(dp.dataClass).append("]");
             System.out.println(sb);
+            sb.setLength(0);
         }
         return correctAnswersCount / (double) answer.size();
     }

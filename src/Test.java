@@ -8,7 +8,6 @@ public class Test {
     private final double theta;
     private final int testingSize;
     private  final int epochs;
-    private final Kl[] classes;
 
     public Test(int dimension, double alpha, double theta, int testingSize, int epochs) {
         this.dimension = dimension;
@@ -16,7 +15,6 @@ public class Test {
         this.theta = theta;
         this.testingSize = testingSize;
         this.epochs = epochs;
-        this.classes = new Kl[] { Kl.SETOSA, Kl.VERSICOLOR, Kl.VIRGINICA };
     }
 
     public void oneAgainstTheRest(
@@ -29,7 +27,7 @@ public class Test {
         List<Integer> trainingAnswers = new ArrayList<>();
         List<Integer> testingAnswers = new ArrayList<>();
 
-        for(Kl kl : this.classes) {
+        for(Kl kl : Kl.irisTypes) {
             trainingData.addAll(inputData.get(kl).getTraining());
             testingData.addAll(inputData.get(kl).getTesting());
         }
@@ -49,7 +47,7 @@ public class Test {
         System.out.println(Arrays.toString(perceptron.getWeights()) + '\n');
         double result = perceptron.test(testingData, testingAnswers, chosenClass);
 
-        System.out.printf("Accuracy: %.2f%%\n", result);
+        System.out.printf("Accuracy: %.2f%%\n", 100 * result);
     }
 
     public void separateAll(Function<Integer, Map<Kl, Data>> readingFunction) {
@@ -57,17 +55,38 @@ public class Test {
         List<DataPoint> allTrainingData = new ArrayList<>();
         Map<Kl, List<DataPoint>> allTestingData = new HashMap<>();
 
-        for(Kl kl : this.classes) {
+        for(Kl kl : Kl.irisTypes) {
             allTrainingData.addAll(inputData.get(kl).getTraining());
             allTestingData.put(kl, inputData.get(kl).getTesting());
         }
 
         PerceptronPairs perceptronPairs = new PerceptronPairs(this.dimension, this.alpha, this.theta);
+
+        System.out.print("Weight vector before training: [SETOSA/VERSICOLOR]: ");
+        System.out.println(Arrays.toString(perceptronPairs.getSetosaVersicolor().getWeights()));
+
+        System.out.print("Weight vector before training: [SETOSA/VIRGINICA]: ");
+        System.out.println(Arrays.toString(perceptronPairs.getSetosaVirginica().getWeights()));
+
+        System.out.print("Weight vector before training: [VIRGINICA/VERSICOLOR]: ");
+        System.out.println(Arrays.toString(perceptronPairs.getVirginicaVersicolor().getWeights()));
+
         perceptronPairs.train(allTrainingData, this.epochs);
 
+        System.out.println("==================================================");
+
+        System.out.print("Weight vector after training: [SETOSA/VERSICOLOR]: ");
+        System.out.println(Arrays.toString(perceptronPairs.getSetosaVersicolor().getWeights()));
+
+        System.out.print("Weight vector after training: [SETOSA/VIRGINICA]: ");
+        System.out.println(Arrays.toString(perceptronPairs.getSetosaVirginica().getWeights()));
+
+        System.out.print("Weight vector after training: [VIRGINICA/VERSICOLOR]: ");
+        System.out.println(Arrays.toString(perceptronPairs.getVirginicaVersicolor().getWeights()));
+
+        System.out.println();
         double result = perceptronPairs.test(allTestingData);
         System.out.printf("Accuracy: %.2f%%\n", 100 * result);
     }
-
 
 }

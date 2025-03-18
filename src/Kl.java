@@ -5,6 +5,8 @@ public enum Kl {
     VIRGINICA,
     UNDETERMINED;
 
+    public static final Kl[] irisTypes = { SETOSA, VERSICOLOR, VIRGINICA };
+
    public static String getOthers(Kl kl) {
        return switch (kl) {
            case VERSICOLOR -> "[SETOSA/VIRGINICA]";

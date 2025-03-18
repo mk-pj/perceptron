@@ -83,15 +83,24 @@ public class PerceptronPairs {
                     ++correctPredictions;
                 ++size;
 
-                sb.setLength(0);
                 sb.append("prediction = [").append(prediction)
                   .append("] reality = [").append(kl).append("]");
-
                 System.out.println(sb);
+                sb.setLength(0);
             }
         }
-
         return correctPredictions / (double) size;
     }
 
+    public Perceptron getSetosaVersicolor() {
+        return setosaVersicolor;
+    }
+
+    public Perceptron getVirginicaVersicolor() {
+        return virginicaVersicolor;
+    }
+
+    public Perceptron getSetosaVirginica() {
+        return setosaVirginica;
+    }
 }
